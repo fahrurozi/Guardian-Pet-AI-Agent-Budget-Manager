@@ -37,7 +37,9 @@ contract GuardianBudgetManagerTest is Test {
             string memory name,
             string memory emoji,
             uint256 dailyLimit,
-            ,,,bool isRegistered,
+            ,
+            ,
+            bool isRegistered,
             bool isRevoked,
 
         ) = guardian.getAgent(agent1);
