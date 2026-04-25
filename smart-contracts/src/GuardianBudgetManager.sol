@@ -28,6 +28,7 @@ contract GuardianBudgetManager is Ownable, ReentrancyGuard {
     event AgentRevoked(address indexed agent);
     event AgentRestored(address indexed agent);
     event DailySpendReset(address indexed agent);
+    event Withdrawn(address indexed to, uint256 amount);
 
     constructor() Ownable(msg.sender) {}
 
@@ -126,6 +127,22 @@ contract GuardianBudgetManager is Ownable, ReentrancyGuard {
         agents[agent].spentToday = 0;
         agents[agent].lastResetTimestamp = block.timestamp;
         emit DailySpendReset(agent);
+    }
+
+    function withdraw(uint256 amount) external onlyOwner nonReentrant {
+        require(amount > 0, "Amount must be > 0");
+        require(address(this).balance >= amount, "Insufficient balance");
+        (bool success, ) = payable(owner()).call{value: amount}("");
+        require(success, "Transfer failed");
+        emit Withdrawn(owner(), amount);
+    }
+
+    function withdrawAll() external onlyOwner nonReentrant {
+        uint256 bal = address(this).balance;
+        require(bal > 0, "Nothing to withdraw");
+        (bool success, ) = payable(owner()).call{value: bal}("");
+        require(success, "Transfer failed");
+        emit Withdrawn(owner(), bal);
     }
 
     // ── View helpers ──────────────────────────────────────────────────────────

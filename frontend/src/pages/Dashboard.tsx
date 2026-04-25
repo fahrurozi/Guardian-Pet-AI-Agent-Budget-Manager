@@ -7,6 +7,7 @@ import {
   useRevokeAgent,
   useRestoreAgent,
   useResetDailySpend,
+  useWithdraw,
 } from "../hooks/useGuardian";
 import PetCard from "../components/PetCard";
 import TxFeed from "../components/TxFeed";
@@ -32,6 +33,7 @@ export default function Dashboard() {
   const { revokeAgent } = useRevokeAgent();
   const { restoreAgent } = useRestoreAgent();
   const { resetDailySpend } = useResetDailySpend();
+  const { withdrawAll, isPending: isWithdrawing } = useWithdraw();
 
   const handleSuccess = useCallback(() => {
     refetchList();
@@ -105,6 +107,15 @@ export default function Dashboard() {
           </button>
           <button className="btn btn-outline" onClick={() => setShowDeposit(true)}>
             💰 Deposit MON
+          </button>
+          <button
+            className="btn btn-outline btn-danger-outline"
+            onClick={() => {
+              if (confirm("Withdraw all MON from contract to your wallet?")) withdrawAll();
+            }}
+            disabled={isWithdrawing}
+          >
+            {isWithdrawing ? "Withdrawing…" : "↩️ Withdraw All"}
           </button>
         </div>
       )}

@@ -68,49 +68,30 @@ echo -e "${GREEN}✓ Deployed at: ${CONTRACT_ADDRESS}${NC}"
 echo -e "${CYAN}  Explorer: https://testnet.monadscan.com/address/${CONTRACT_ADDRESS}${NC}"
 echo ""
 
-# ── Get verification data ─────────────────────────────────────────────────────
-echo -e "${YELLOW}► Preparing verification data...${NC}"
+# ── Verify on Monad Testnet (Sourcify via BlockVision) ────────────────────────
+echo -e "${YELLOW}► Verifying contract on Monad testnet explorer...${NC}"
+echo -e "   (uses Sourcify endpoint: https://sourcify-api-monad.blockvision.org/)"
 
-forge verify-contract "$CONTRACT_ADDRESS" "$CONTRACT_PATH" \
+# Primary: forge verify-contract with Sourcify endpoint (configured in foundry.toml)
+if forge verify-contract "$CONTRACT_ADDRESS" "$CONTRACT_PATH" \
+    --rpc-url "$RPC_URL" \
+    --etherscan-api-key placeholder \
+    --verifier-url "https://sourcify-api-monad.blockvision.org/" \
     --chain "$CHAIN_ID" \
-    --show-standard-json-input > /tmp/guardian-standard-input.json
-
-COMPILER_VERSION=$(cat out/${CONTRACT_NAME}.sol/${CONTRACT_NAME}.json | grep -o '"solcVersion":"[^"]*"' | head -1 | cut -d'"' -f4)
-if [ -z "$COMPILER_VERSION" ]; then
-    COMPILER_VERSION="v0.8.28+commit.7893614a"
+    --watch 2>&1; then
+    echo -e "${GREEN}✓ Contract verified on Sourcify (BlockVision)${NC}"
+    echo -e "${CYAN}  MonadScan:    https://testnet.monadscan.com/address/${CONTRACT_ADDRESS}${NC}"
+    echo -e "${CYAN}  MonadVision:  https://testnet.monadvision.io/address/${CONTRACT_ADDRESS}${NC}"
+    echo -e "${CYAN}  Socialscan:   https://monad-testnet.socialscan.io/address/${CONTRACT_ADDRESS}${NC}"
+else
+    echo -e "${YELLOW}⚠ Sourcify verification failed — you can verify manually:${NC}"
+    echo -e "  1. Run: forge verify-contract ${CONTRACT_ADDRESS} ${CONTRACT_PATH} \\"
+    echo -e "             --rpc-url ${RPC_URL} \\"
+    echo -e "             --etherscan-api-key placeholder \\"
+    echo -e "             --verifier-url 'https://sourcify-api-monad.blockvision.org/' \\"
+    echo -e "             --chain ${CHAIN_ID}"
+    echo -e "  2. Or use Sourcify UI: https://sourcify.dev/#/verifier"
 fi
-
-cat out/${CONTRACT_NAME}.sol/${CONTRACT_NAME}.json | python3 -c "
-import json,sys
-data = json.load(sys.stdin)
-print(json.dumps(data.get('metadata', {})))
-" > /tmp/guardian-metadata.json
-
-# ── Verify on all explorers ───────────────────────────────────────────────────
-echo -e "${YELLOW}► Verifying on all Monad explorers...${NC}"
-
-STANDARD_INPUT=$(cat /tmp/guardian-standard-input.json)
-FOUNDRY_METADATA=$(cat /tmp/guardian-metadata.json)
-
-VERIFY_PAYLOAD=$(cat << EOF
-{
-  "chainId": ${CHAIN_ID},
-  "contractAddress": "${CONTRACT_ADDRESS}",
-  "contractName": "${CONTRACT_PATH}",
-  "compilerVersion": "${COMPILER_VERSION}",
-  "standardJsonInput": ${STANDARD_INPUT},
-  "foundryMetadata": ${FOUNDRY_METADATA}
-}
-EOF
-)
-
-echo "$VERIFY_PAYLOAD" > /tmp/guardian-verify.json
-
-VERIFY_RESPONSE=$(curl -s -X POST https://agents.devnads.com/v1/verify \
-    -H "Content-Type: application/json" \
-    -d @/tmp/guardian-verify.json)
-
-echo "Verification response: $VERIFY_RESPONSE"
 
 # ── Write contract address to frontend ────────────────────────────────────────
 echo ""

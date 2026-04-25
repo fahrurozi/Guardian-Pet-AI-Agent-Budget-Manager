@@ -8,6 +8,7 @@
     "demo": "node agent-demo.mjs"
   },
   "dependencies": {
+    "dotenv": "^16.4.5",
     "express": "^4.19.2",
     "viem": "^2.31.3"
   }

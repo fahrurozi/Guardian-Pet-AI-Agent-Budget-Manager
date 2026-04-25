@@ -1,3 +1,5 @@
+import "dotenv/config";
+
 /**
  * Guardian Pet — AI Agent Demo (x402 Payment Flow)
  *

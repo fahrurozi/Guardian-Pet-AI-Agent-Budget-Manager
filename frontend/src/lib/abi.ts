@@ -61,6 +61,20 @@ export const GUARDIAN_ABI = [
     inputs: [{ name: "agent", type: "address" }],
     outputs: [],
   },
+  {
+    type: "function",
+    name: "withdraw",
+    stateMutability: "nonpayable",
+    inputs: [{ name: "amount", type: "uint256" }],
+    outputs: [],
+  },
+  {
+    type: "function",
+    name: "withdrawAll",
+    stateMutability: "nonpayable",
+    inputs: [],
+    outputs: [],
+  },
   // ── Read ───────────────────────────────────────────────────────────────────
   {
     type: "function",
@@ -159,5 +173,13 @@ export const GUARDIAN_ABI = [
     type: "event",
     name: "DailySpendReset",
     inputs: [{ name: "agent", type: "address", indexed: true }],
+  },
+  {
+    type: "event",
+    name: "Withdrawn",
+    inputs: [
+      { name: "to", type: "address", indexed: true },
+      { name: "amount", type: "uint256", indexed: false },
+    ],
   },
 ] as const;

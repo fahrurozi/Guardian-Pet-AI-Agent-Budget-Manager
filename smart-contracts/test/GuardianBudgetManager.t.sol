@@ -13,6 +13,8 @@ contract GuardianBudgetManagerTest is Test {
 
     uint256 constant DAILY_LIMIT = 1 ether;
 
+    receive() external payable {}
+
     function setUp() public {
         owner = address(this);
         agent1 = makeAddr("agent1");
@@ -179,5 +181,30 @@ contract GuardianBudgetManagerTest is Test {
         vm.prank(agent1);
         vm.expectRevert("Daily limit exceeded");
         guardian.executePayment(payable(recipient), 2 ether, "over limit");
+    }
+
+    function test_Withdraw_PartialAmount() public {
+        uint256 ownerBefore = owner.balance;
+        guardian.withdraw(1 ether);
+        assertEq(address(guardian).balance, 9 ether);
+        assertEq(owner.balance, ownerBefore + 1 ether);
+    }
+
+    function test_WithdrawAll() public {
+        uint256 ownerBefore = owner.balance;
+        guardian.withdrawAll();
+        assertEq(address(guardian).balance, 0);
+        assertEq(owner.balance, ownerBefore + 10 ether);
+    }
+
+    function test_Withdraw_OnlyOwner() public {
+        vm.prank(agent1);
+        vm.expectRevert();
+        guardian.withdraw(1 ether);
+    }
+
+    function test_Withdraw_InsufficientBalance() public {
+        vm.expectRevert("Insufficient balance");
+        guardian.withdraw(100 ether);
     }
 }

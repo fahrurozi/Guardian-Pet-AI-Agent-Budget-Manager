@@ -1,3 +1,5 @@
+import "dotenv/config";
+
 /**
  * Guardian Pet — x402 Mock API Server
  *

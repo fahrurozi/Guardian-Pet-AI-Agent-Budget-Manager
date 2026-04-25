@@ -168,3 +168,30 @@ export function useResetDailySpend() {
 
   return { resetDailySpend, isPending, isConfirming, isSuccess, hash, error };
 }
+
+export function useWithdraw() {
+  const { writeContract, data: hash, isPending, error } = useWriteContract();
+
+  const { isLoading: isConfirming, isSuccess } = useWaitForTransactionReceipt({
+    hash,
+  });
+
+  const withdraw = (amountMon: string) => {
+    writeContract({
+      abi: GUARDIAN_ABI,
+      address: GUARDIAN_CONTRACT_ADDRESS,
+      functionName: "withdraw",
+      args: [parseEther(amountMon)],
+    });
+  };
+
+  const withdrawAll = () => {
+    writeContract({
+      abi: GUARDIAN_ABI,
+      address: GUARDIAN_CONTRACT_ADDRESS,
+      functionName: "withdrawAll",
+    });
+  };
+
+  return { withdraw, withdrawAll, isPending, isConfirming, isSuccess, hash, error };
+}
