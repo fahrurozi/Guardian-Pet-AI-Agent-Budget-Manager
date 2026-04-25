@@ -5,7 +5,8 @@
   "description": "Mock x402 API server + AI agent demo for Guardian Pet",
   "scripts": {
     "server": "node server.js",
-    "demo": "node agent-demo.mjs"
+    "demo": "node agent-demo.mjs",
+    "contract": "node contract-cli.mjs"
   },
   "dependencies": {
     "dotenv": "^16.4.5",
