@@ -1,6 +1,6 @@
 // ── Contract ──────────────────────────────────────────────────────────────────
 // Updated automatically by scripts/deploy.sh after deployment
-export const GUARDIAN_CONTRACT_ADDRESS = "0x0000000000000000000000000000000000000000" as `0x${string}`;
+export const GUARDIAN_CONTRACT_ADDRESS = "0xacC284B59b7CB0F4578f3135064743A683B4AC83" as `0x${string}`;
 
 // ── Monad Testnet ─────────────────────────────────────────────────────────────
 export const MONAD_TESTNET_CHAIN_ID = 10143;
