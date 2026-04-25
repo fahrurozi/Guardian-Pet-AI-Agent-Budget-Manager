@@ -55,7 +55,7 @@ export default function Dashboard() {
             <span className="text-gradient">Guardian Pet</span>
           </h1>
           <p className="landing-tagline">
-            Financial firewall untuk AI agents. Spend less, trust more.
+            Financial firewall for AI agents. Spend less, trust more.
           </p>
           
           <div className="landing-card">
