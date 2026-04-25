@@ -1,0 +1,26 @@
+services:
+  x402-server:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: guardian-pet-x402-server
+    env_file:
+      - .env
+    environment:
+      PORT: ${PORT:-3001}
+      NODE_ENV: production
+    ports:
+      - "${PORT:-3001}:${PORT:-3001}"
+    restart: unless-stopped
+    healthcheck:
+      test:
+        [
+          "CMD",
+          "node",
+          "-e",
+          "fetch('http://127.0.0.1:' + (process.env.PORT || 3001) + '/health').then(r => process.exit(r.ok ? 0 : 1)).catch(() => process.exit(1))"
+        ]
+      interval: 30s
+      timeout: 5s
+      retries: 3
+      start_period: 10s
