@@ -1,23 +1,26 @@
+@import url('https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;800;900&display=swap');
+
 /* ── Reset & Base ──────────────────────────────────────────────────────────── */
 *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
 :root {
-  --bg:         #0b0c10;
-  --bg-card:    #13141a;
-  --bg-card2:   #1a1b23;
-  --border:     #2a2b38;
-  --border-2:   #35364a;
-  --purple:     #836EF9;
-  --purple-dim: #4a3f99;
+  --bg:         #0f0b18;
+  --bg-card:    #1a122e;
+  --bg-card2:   #261a45;
+  --border:     #462C7D; /* Deep Blue/Navy */
+  --border-2:   #831C91; /* Purple */
+  --purple:     #D552A3; /* Magenta / Pinkish Red */
+  --purple-dim: #831C91; /* Purple */
+  --pink:       #FF70BF; /* Light Pink */
   --green:      #22c55e;
   --yellow:     #eab308;
   --red:        #ef4444;
-  --text:       #e2e4f0;
-  --text-dim:   #8b8fa8;
-  --text-muted: #52546a;
-  --radius:     12px;
-  --radius-sm:  8px;
-  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", system-ui, sans-serif;
+  --text:       #fcf5f9;
+  --text-dim:   #d4c3cf;
+  --text-muted: #a691a0;
+  --radius:     16px;
+  --radius-sm:  12px;
+  font-family: 'Nunito', -apple-system, BlinkMacSystemFont, "Segoe UI", system-ui, sans-serif;
   font-size: 14px;
   color: var(--text);
   background: var(--bg);
@@ -119,6 +122,143 @@ input { font-family: inherit; font-size: 13px; }
 .empty-sub { color: var(--text-dim); line-height: 1.7; margin-bottom: 24px; }
 .feature-pills { display: flex; gap: 8px; flex-wrap: wrap; justify-content: center; }
 .pill { padding: 6px 14px; border-radius: 20px; background: var(--bg-card2); border: 1px solid var(--border); font-size: 12px; color: var(--text-dim); }
+
+/* ── Landing Page (Fun & Pet Friendly) ────────────────────────────────────── */
+.landing-page {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: calc(100vh - 60px);
+  overflow: hidden;
+}
+
+.landing-bg-glow {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 700px;
+  height: 700px;
+  background: radial-gradient(circle, rgba(213,82,163,0.15) 0%, rgba(131,28,145,0.05) 50%, rgba(15,11,24,0) 70%);
+  z-index: 0;
+  pointer-events: none;
+}
+
+.landing-content {
+  position: relative;
+  z-index: 1;
+  text-align: center;
+  max-width: 640px;
+  padding: 40px 20px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.landing-pet-container {
+  position: relative;
+  width: 140px;
+  height: 140px;
+  margin-bottom: 20px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-end;
+}
+
+.landing-pet {
+  font-size: 84px;
+  line-height: 1;
+  z-index: 2;
+  animation: bounce 2s infinite cubic-bezier(0.28, 0.84, 0.42, 1);
+  filter: drop-shadow(0 15px 20px rgba(213, 82, 163, 0.4));
+  margin-bottom: 10px;
+}
+
+.landing-pet-shadow {
+  position: absolute;
+  bottom: 0;
+  width: 70px;
+  height: 14px;
+  background: rgba(0,0,0,0.5);
+  border-radius: 50%;
+  filter: blur(5px);
+  animation: shadowPulse 2s infinite cubic-bezier(0.28, 0.84, 0.42, 1);
+}
+
+@keyframes bounce {
+  0%, 100% { transform: translateY(0) scale(1, 1); }
+  50% { transform: translateY(-24px) scale(0.95, 1.05); }
+}
+
+@keyframes shadowPulse {
+  0%, 100% { transform: scale(1); opacity: 0.6; }
+  50% { transform: scale(0.8); opacity: 0.2; }
+}
+
+.landing-title {
+  font-size: 56px;
+  font-weight: 900;
+  margin-bottom: 16px;
+  letter-spacing: -0.03em;
+  line-height: 1.1;
+}
+
+.text-gradient {
+  background: linear-gradient(135deg, var(--pink) 0%, var(--purple) 40%, var(--border-2) 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  color: transparent;
+  display: inline-block;
+}
+
+.landing-tagline {
+  font-size: 20px;
+  color: var(--text);
+  font-weight: 600;
+  margin-bottom: 40px;
+  max-width: 500px;
+  line-height: 1.5;
+}
+
+.landing-card {
+  background: rgba(26, 18, 46, 0.4);
+  border: 1px solid var(--border-2);
+  border-radius: 24px;
+  padding: 32px 40px;
+  backdrop-filter: blur(12px);
+  box-shadow: 0 20px 40px rgba(0,0,0,0.5), inset 0 1px 0 rgba(255,255,255,0.05);
+  width: 100%;
+}
+
+.landing-sub {
+  color: var(--text-dim);
+  font-size: 16px;
+  line-height: 1.6;
+  margin-bottom: 28px;
+  font-weight: 400;
+}
+
+.fun-pill {
+  background: rgba(213, 82, 163, 0.1);
+  border: 1px solid rgba(213, 82, 163, 0.3);
+  color: var(--pink);
+  font-weight: 700;
+  padding: 8px 18px;
+  font-size: 13px;
+  border-radius: 24px;
+  transition: all 0.2s ease;
+  cursor: default;
+}
+
+.fun-pill:hover {
+  background: rgba(213, 82, 163, 0.2);
+  transform: translateY(-2px);
+  box-shadow: 0 6px 16px rgba(213, 82, 163, 0.2);
+  border-color: var(--pink);
+}
 
 /* ── Pet Card ─────────────────────────────────────────────────────────────── */
 .pet-card {

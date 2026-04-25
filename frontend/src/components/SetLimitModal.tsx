@@ -47,8 +47,8 @@ export default function SetLimitModal({
             <input
               className="form-input"
               type="number"
-              step="0.001"
-              min="0.0001"
+              step="any"
+              min="0"
               value={newLimit}
               onChange={(e) => setNewLimit(e.target.value)}
             />

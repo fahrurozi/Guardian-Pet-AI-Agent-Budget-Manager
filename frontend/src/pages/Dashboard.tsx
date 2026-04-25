@@ -43,20 +43,33 @@ export default function Dashboard() {
 
   if (!isConnected) {
     return (
-      <div className="dashboard-empty">
-        <div className="empty-hero">
-          <div className="empty-pet">🐾</div>
-          <h1 className="empty-title">Guardian Pet</h1>
-          <p className="empty-sub">
-            On-chain spending firewall for AI agents on Monad.
-            <br />
-            Connect your wallet to manage your pets.
+      <div className="landing-page">
+        <div className="landing-bg-glow"></div>
+        <div className="landing-content">
+          <div className="landing-pet-container">
+            <div className="landing-pet">🐶</div>
+            <div className="landing-pet-shadow"></div>
+          </div>
+          
+          <h1 className="landing-title">
+            <span className="text-gradient">Guardian Pet</span>
+          </h1>
+          <p className="landing-tagline">
+            Financial firewall untuk AI agents. Spend less, trust more.
           </p>
-          <div className="feature-pills">
-            <span className="pill">🔒 Trustless Enforcement</span>
-            <span className="pill">⚡ Monad Speed</span>
-            <span className="pill">💸 x402 Payments</span>
-            <span className="pill">🤖 Multi-Agent</span>
+          
+          <div className="landing-card">
+            <p className="landing-sub">
+              On-chain spending firewall for AI agents on Monad.
+              <br />
+              Connect your wallet to hatch your first pet.
+            </p>
+            <div className="feature-pills">
+              <span className="pill fun-pill">🔒 Trustless Enforcement</span>
+              <span className="pill fun-pill">⚡ Monad Speed</span>
+              <span className="pill fun-pill">💸 x402 Payments</span>
+              <span className="pill fun-pill">🤖 Multi-Agent</span>
+            </div>
           </div>
         </div>
       </div>

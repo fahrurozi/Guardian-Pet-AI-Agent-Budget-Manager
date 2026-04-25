@@ -97,8 +97,8 @@ export default function AddPetModal({ onClose, onSuccess }: AddPetModalProps) {
             <input
               className="form-input"
               type="number"
-              step="0.001"
-              min="0.0001"
+              step="any"
+              min="0"
               value={dailyLimit}
               onChange={(e) => setDailyLimit(e.target.value)}
             />
