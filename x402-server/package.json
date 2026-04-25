@@ -1,0 +1,14 @@
+{
+  "name": "guardian-pet-x402-server",
+  "version": "1.0.0",
+  "type": "module",
+  "description": "Mock x402 API server + AI agent demo for Guardian Pet",
+  "scripts": {
+    "server": "node server.js",
+    "demo": "node agent-demo.mjs"
+  },
+  "dependencies": {
+    "express": "^4.19.2",
+    "viem": "^2.31.3"
+  }
+}
