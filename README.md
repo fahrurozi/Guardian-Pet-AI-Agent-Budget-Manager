@@ -331,6 +331,7 @@ Default network configuration:
 - RPC URL: `https://testnet-rpc.monad.xyz`
 - Explorer: `https://testnet.monadscan.com`
 - Guardian contract: `0x1e17c67f42211cA93a007a00b82638a572a2ac4F`
+- Web App : `https://guardian-pet-ai-agent-budget-manage.vercel.app/`
 
 ## License
 
